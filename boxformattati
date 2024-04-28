@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BoxFormattati</title>
+
+  <style>
+
+    .box1 {
+
+        width: 50%;
+
+        height: 20em;
+
+        padding: 2em;
+
+        background-color: gray;
+
+        display: flex;
+
+      margin: 5em 0;
+
+    }
+
+    .box2 {
+
+        width: 50%;
+
+        height: 6em;
+
+        border: 3px solid green;
+
+        background-color: red;
+
+    }
+
+    .box3 {
+
+        width: 3em;
+
+        height: 5em;
+
+        padding: 15px;
+
+        margin: auto 3em 0 auto;
+
+        background-color: blue;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<center>
+
+<div class="box1">
+
+  <div class="box2">
+
+  </div>
+
+  <div class="box3">
+
+  </div>
+
+</div>
+
+</center>
+
+</body>
+
+</html>
+
+ 
+
+Box flottanti:
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="portalenether.png">
+
+    <title>BoxFlottanti</title>
+
+    <style>
+
+        .alto{
+
+            background-color: black;
+
+            height: 18vh;
+
+            width: auto;
+
+            margin: 0 1vh;
+
+        }
+
+        .sx{
+
+            background-color: black;
+
+            float: left;
+
+            clear: left;
+
+            margin: 1vh;
+
+            height: 60vh;
+
+            width: 15vw;
+
+        }
+
+        .centro{
+
+            background-color: rgb(201, 26, 184);
+
+            float: left;
+
+            height: 60vh;
+
+            width: 64.8vw;
+
+            margin: 1vh;
+
+        }
+
+        .dx{
+
+            background-color: black;
+
+            float: left;
+
+            height: 60vh;
+
+            width: 15vw;
+
+            margin: 1vh;
+
+        }
+
+        .basso{
+
+            background-color: black;
+
+            clear: left;
+
+            height: 18vh;
+
+            width: auto;
+
+            margin: 0 1vh;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="alto"></div>
+
+    <div class="sx"></div>
+
+    <div class="centro"></div>
+
+    <div class="dx"></div>
+
+    <div class="basso"></div>
+
+</body>
+
+</html>
+
+ 
+
+Tabella formattata(html):
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TabellaFormattata</title>
+
+    <link rel="stylesheet" type="text/css" href="TabellaFormattata.css">
+
+</head>
+
+<body>
+
+<table>
+
+    <tr>
+
+        <th colspan="10" style="text-align: center;font-size: x-large;">Valutazioni</td>
+
+    </tr>
+
+<tr>
+
+    <th style="background-color: #FFF;">Nomi</th>
+
+    <th style="background-color: #FF3333;">Italiano</th>
+
+    <th style="background-color: #0000FF;">Matematica</th>
+
+    <th style="background-color: #9933FF;">Inglese</th>
+
+    <th style="background-color: #3399FF;">Informatica</th>
+
+    <th style="background-color: #33FF33;">Sistemi e reti</th>
+
+    <th style="background-color: #994C00;">TPS</th>
+
+    <th style="background-color: #FFFF00;">Ed. Fisica</th>
+
+    <th style="background-color: #FF9933;">Ed. Civica</th>
+
+    <th style="background-color: #808080;">Religione</th>
+
+</tr>
+
+<tr>
+
+    <th>Alessandro</th>
+
+    <td>6</td>
+
+    <td>7</td>
+
+    <td>5</td>
+
+    <td>7</td>
+
+    <td>8</td>
+
+    <td>5</td>
+
+    <td>4</td>
+
+    <td>9</td>
+
+    <td>8</td>
+
+</tr>
+
+<tr>
+
+    <th>Mattia</th>
+
+    <td>9</td>
+
+    <td>3</td>
+
+    <td>5</td>
+
+    <td>6</td>
+
+    <td>5</td>
+
+    <td>5</td>
+
+    <td>7</td>
+
+    <td>9</td>
+
+    <td>10</td>
+
+</tr>
+
+<tr>
+
+    <th>Diego</th>
+
+    <td>6</td>
+
+    <td>7</td>
+
+    <td>8</td>
+
+    <td>6</td>
+
+    <td>7</td>
+
+    <td>5</td>
+
+    <td>6</td>
+
+    <td>8</td>
+
+    <td>8</td>
+
+</tr>
+
+<tr>
+
+    <th>Tommaso</th>
+
+    <td>7</td>
+
+    <td>4</td>
+
+    <td>7</td>
+
+    <td>6</td>
+
+    <td>4</td>
+
+    <td>5</td>
+
+    <td>7</td>
+
+    <td>10</td>
+
+    <td>10</td>
+
+</tr>
+
+<tr>
+
+    <th>Riccardo</th>
+
+    <td>7</td>
+
+    <td>7</td>
+
+    <td>7</td>
+
+    <td>7</td>
+
+    <td>8</td>
+
+    <td>4</td>
+
+    <td>7</td>
+
+    <td>9</td>
+
+    <td>8</td>
+
+</tr>
+
+<tr>
+
+    <th>Matteo</th>
+
+    <td>6</td>
+
+    <td>6</td>
+
+    <td>8</td>
+
+    <td>6</td>
+
+    <td>8</td>
+
+    <td>5</td>
+
+    <td>7</td>
+
+    <td>9</td>
+
+    <td>9</td>
+
+</tr>
+
+<tr>
+
+<th>Lorenzo</th>
+
+<td>6</td>
+
+<td>5</td>
+
+<td>7</td>
+
+<td>6</td>
+
+<td>9</td>
+
+<td>6</td>
+
+<td>7</td>
+
+<td>9</td>
+
+<td>9</td>
+
+</tr>
+
+<tr>
+
+<th>Leonardo</th>
+
+<td>9</td>
+
+<td>4</td>
+
+<td>7</td>
+
+<td>8</td>
+
+<td>5</td>
+
+<td>8</td>
+
+<td>7</td>
+
+<td>9</td>
+
+<td>10</td>
+
+</tr>
+
+<tr>
+
+<th>Gabriele</th>
+
+<td>6</td>
+
+<td>3</td>
+
+<td>9</td>
+
+<td>6</td>
+
+<td>8</td>
+
+<td>5</td>
+
+<td>10</td>
+
+<td>9</td>
+
+<td>8</td>
+
+</tr>
+
+<tr>
+
+<th>Edoardo</th>
+
+<td>7</td>
+
+<td>9</td>
+
+<td>8</td>
+
+<td>5</td>
+
+<td>5</td>
+
+<td>8</td>
+
+<td>7</td>
+
+<td>7</td>
+
+<td>9</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>
