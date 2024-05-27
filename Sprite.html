@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sprite</title>
+    <title>Sprite</title>
     <style>
-       #esplosione{
-  width: 120px;
-  height: 100px;
-  background: url(immagini/IMG_3426.jpeg) 0 0;
-}
-
+        #esplosione {
+            width: 120px;
+            height: 100px;
+            background: url('immagini/IMG_3426.jpeg') 0 0;
+            background-size: cover; /* Assicurati che l'immagine di sfondo si adatti */
+        }
     </style>
-    
 </head>
-    <body>
-        <p>questa era l'immagine iniziale</p>
-        <img src="IMG_3426.jpeg">
-        <p>questo invece è il risultato finale</p>
-        <img id="esplosione" src="immagini/IMG_3426.jpeg" width="1" height="1">
-    </body>
+<body>
+    <p>Questa era l'immagine iniziale:</p>
+    <img src="immagini/IMG_3426.jpeg" alt="Immagine Iniziale">
+    
+    <p>Questo invece è il risultato finale:</p>
+    <div id="esplosione"></div>
+</body>
 </html>
