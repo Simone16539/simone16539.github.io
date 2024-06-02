@@ -1,23 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sprite</title>
-    <style>
-       #esplosione{
-  width: 30px;
-  height: 20px;
-  background: url(immagini/IMG_3426.jpeg) 0 0;
+<style>
+#navlist {
+  position: relative;
 }
 
-    </style>
-    
+#navlist li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  top: 0;
+}
+
+#navlist li, #navlist a {
+  height: 44px;
+  display: block;
+}
+
+#home {
+  left: 0px;
+  width: 46px;
+  background: url('img_navsprites_hover.gif') 0 0;
+}
+
+#prev {
+  left: 63px;
+  width: 43px;
+  background: url('img_navsprites_hover.gif') -47px 0;
+}
+
+#next {
+  left: 129px;
+  width: 43px;
+  background: url('img_navsprites_hover.gif') -91px 0;
+}
+
+#home a:hover {
+  background: url('img_navsprites_hover.gif') 0 -45px;
+}
+
+#prev a:hover {
+  background: url('img_navsprites_hover.gif') -47px -45px;
+}
+
+#next a:hover {
+  background: url('img_navsprites_hover.gif') -91px -45px;
+}
+</style>
 </head>
-    <body>
-        <p>questa era l'immagine iniziale</p>
-        <img src="IMG_3426.jpeg">
-        <p>questo invece è il risultato finale</p>
-        <img id="esplosione" src="immagini/IMG_3426.jpeg" width="1" height="1">
-    </body>
+<body>
+
+<ul id="navlist">
+  <li id="home"><a href="default.asp"></a></li>
+  <li id="prev"><a href="css_intro.asp"></a></li>
+  <li id="next"><a href="css_syntax.asp"></a></li>
+</ul>
+
+</body>
 </html>
