@@ -39,90 +39,50 @@
             margin: 1vh 0 1vh 1vh;
         }
         /* Center content styling */
-         #breadcrumb li{
-
+        #breadcrumb {
+            padding-left: 1em;
+        }
+        #breadcrumb li {
             display: inline;
-
         }
-
-        #breadcrumb li:not(:last-child):after{
-
+        #breadcrumb li:not(:last-child):after {
             content: ">";
-
         }
-
- 
-
-        #banner{
-
+        #banner {
             height: 6vh;
-
             width: auto;
-
             background-color: rgb(75, 129, 255);
-
             padding-top: 2vh;
-
             padding-bottom: 2vh;
-
             text-align: center;
-
             font-size: xx-large;
-
         }
-
-        #titoli{
-
+        #titles {
             background-color: rgb(119, 160, 255);
-
             height: auto;
-
             width: auto;
-
             margin: 2% 5%;
-
             float: left;
-
             text-align: center;
-
             font-size: 152%;
-
             padding: 2% 5%;
-
         }
-
-        #articoli{
-
+        #article {
             background-color: rgb(119, 160, 255);
-
             height: 13vh;
-
             width: auto;
-
             padding: 2% 2%;
-
             margin: auto 2vh 2% 2vh;
-
             text-align: center;
-
             font-size: x-large;
-
             clear: both;
-
         }
-
-        #articoli div{
-
+        #article div {
             background-color: rgb(75, 129, 255);
-
             width: 10%;
-
             height: 4vh;
-
             padding: 1% 2%;
-
             text-align: center;
-
         }
         /* Dropdown menu styling */
         ul {
@@ -178,40 +138,40 @@
 </head>
 <body>
     <div class="dropdown">
-        <button class="dropbtn">home</button>
+        <button class="dropbtn">Home</button>
         <div class="dropdown-content">
-            <a href="#">sottocat 1</a>
-            <a href="#">sottocat 2</a>
-            <a href="#">sottocat 3</a>
+            <a href="#">Subcat 1</a>
+            <a href="#">Subcat 2</a>
+            <a href="#">Subcat 3</a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">news</button>
+        <button class="dropbtn">News</button>
         <div class="dropdown-content">
-            <a href="#">sottocat 1</a>
-            <a href="#">sottocat 2</a>
-            <a href="#">sottocat 3</a>
+            <a href="#">Subcat 1</a>
+            <a href="#">Subcat 2</a>
+            <a href="#">Subcat 3</a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">about</button>
+        <button class="dropbtn">About</button>
         <div class="dropdown-content">
-            <a href="#">sottocat 1</a>
-            <a href="#">sottocat 2</a>
-            <a href="#">sottocat 3</a>
+            <a href="#">Subcat 1</a>
+            <a href="#">Subcat 2</a>
+            <a href="#">Subcat 3</a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">prodotti</button>
+        <button class="dropbtn">Products</button>
         <div class="dropdown-content">
-            <a href="#">sottocat 1</a>
-            <a href="#">sottocat 2</a>
-            <a href="#">sottocat 3</a>
+            <a href="#">Subcat 1</a>
+            <a href="#">Subcat 2</a>
+            <a href="#">Subcat 3</a>
         </div>
     </div>
     <div class="estremo">
         <div id="Logo">LOGO</div>
-        <div id="Title"><h1>Titolo</h1></div>
+        <div id="Title"><h1>Title</h1></div>
         <div id="search">
             <form>
                 <input type="search" value="search">
@@ -219,85 +179,41 @@
         </div>
     </div>
     <div class="lato" style="clear:left">
-        <div id="item"><h1>item</h1></div>
+        <div id="item"><h1>Item</h1></div>
         <div id="item"><h1>Active</h1></div>
-        <div id="item"><h1>item</h1></div>
-        <div id="item"><h1>item</h1></div>
+        <div id="item"><h1>Item</h1></div>
+        <div id="item"><h1>Item</h1></div>
     </div>
-   <div class="centro">
-
-        <ul id="breadcrumb" style="padding-left: 1em;">
-
-            <li>Home </li>
-
-            <li>Categoria </li>
-
-            <li>Sottocategoria </li>
-
+    <div class="centro">
+        <ul id="breadcrumb">
+            <li>Home</li>
+            <li>Category</li>
+            <li>Subcategory</li>
         </ul>
-
-        <i style="font-size: 30px; float:right; color: black;margin-right: 1%;" class="fas fa-angle-right"></i>
-
-        <i style="font-size: 30px; float:right; color: black;" class="fas fa-angle-left"></i>
-
+        <i class="fas fa-angle-right" style="font-size: 30px; float:right; margin-right: 1%; color: black;"></i>
+        <i class="fas fa-angle-left" style="font-size: 30px; float:right; color: black;"></i>
         <div>
-
             <div id="banner">Banner</div>
-
         </div>
-
-        <div id="titoli" style="clear:left; margin-left: 12%;">Titolo 1</div>
-
-        <div id="titoli"> Titolo 2</div>
-
-        <div id="titoli">Titolo 3</div>
-
-        <div id="articoli">
-
-            <div>
-
-                Titolo 1
-
-            </div>
-
-            Articolo 1
-
+        <div id="titles" style="clear:left; margin-left: 12%;">Title 1</div>
+        <div id="titles">Title 2</div>
+        <div id="titles">Title 3</div>
+        <div id="article">
+            <div>Title 1</div>
+            Article 1
         </div>
-
-        <div id="articoli">
-
-            <div>
-
-                Titolo 2
-
-            </div>
-
-            Articolo 2
-
+        <div id="article">
+            <div>Title 2</div>
+            Article 2
         </div>
-
     </div>
-
- 
-
     <div class="lato">
-
-        <div id="info"><h1>Calendario</h1></div>
-
+        <div id="info"><h1>Calendar</h1></div>
         <div id="info"><h1>News</h1></div>
-
     </div>
-
- 
-
     <div class="estremo" style="clear:left">
-
-        <div id="contatti"><h1>Contatti</h1></div>
-
+        <div id="contacts"><h1>Contacts</h1></div>
         <div id="links"><h1>Links</h1></div>
-
     </div>
-
 </body>
-
 </html>
