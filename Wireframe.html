@@ -20,130 +20,61 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 2%;
-        .centro{
-
-            background-color: rgb(160, 179, 232);
-
+        }
+        .centro {
+            background-color: rgb(180, 150, 200);
             float: left;
-
             height: 80vh;
-
             width: 66.5%;
-
             margin-top: 1vh;
-
             margin-left: 1vh;
-
             padding-left: 1%;
-
             padding-right: 1%;
-
         }
-
-        .lato{
-
-            background-color: rgb(74, 223, 146);
-
+        .lato {
+            background-color: rgb(112, 223, 146);
             float: left;
-
             height: 80vh;
-
-            width: 15%;
-
+            width: 14.9%;
             margin: 1vh 0 1vh 1vh;
-
         }
-
- 
-
- 
-
-        /* inizio centro*/
-
-        #breadcrumb li{
-
+        /* Center content styling */
+        #breadcrumb {
+            padding-left: 1em;
+        }
+        #breadcrumb li {
             display: inline;
-
         }
-
-        #breadcrumb li:not(:last-child):after{
-
+        #breadcrumb li:not(:last-child):after {
             content: ">";
-
         }
-
- 
-
-        #banner{
-
+        #banner {
             height: 6vh;
-
-            width: auto;
-
             background-color: rgb(75, 129, 255);
-
-            padding-top: 2vh;
-
-            padding-bottom: 2vh;
-
             text-align: center;
-
             font-size: xx-large;
-
+            padding: 2vh 0;
         }
-
-        #titles{
-
-            background-color: rgb(119, 160, 255);
-
-            height: auto;
-
-            width: auto;
-
+        #titles, #article {
+            background-color: rgb(97, 136, 255);
             margin: 2% 5%;
-
-            float: left;
-
             text-align: center;
-
-            font-size: 152%;
-
+        }
+        #titles {
+            font-size: 155%;
             padding: 2% 5%;
-
         }
-
-        #articoli{
-
-            background-color: rgb(119, 160, 255);
-
+        #article {
             height: 13vh;
-
-            width: auto;
-
-            padding: 2% 2%;
-
-            margin: auto 2vh 2% 2vh;
-
-            text-align: center;
-
             font-size: x-large;
-
             clear: both;
-
         }
-
-        #articoli div{
-
-            background-color: rgb(75, 129, 255);
-
+        #article div {
+            background-color: rgb(90, 180, 255);
             width: 10%;
-
             height: 4vh;
-
             padding: 1% 2%;
-
-            text-align: center;
-
+            margin: auto;
         }
         /* Header styling */
         #search {
@@ -280,7 +211,7 @@
         <div id="item"><h1>item</h1></div>
         <div id="item"><h1>item</h1></div>
     </div>
-     <div class="centro">
+   <div class="centro">
 
         <ul id="breadcrumb" style="padding-left: 1em;">
 
@@ -302,13 +233,13 @@
 
         </div>
 
-        <div id="titoli" style="clear:left; margin-left: 12%;">Titolo 1</div>
+        <div id="titles" style="clear:left; margin-left: 12%;">Titolo 1</div>
 
-        <div id="titoli"> Titolo 2</div>
+        <div id="titles"> Titolo 2</div>
 
-        <div id="titoli">Titolo 3</div>
+        <div id="titles">Titolo 3</div>
 
-        <div id="articoli">
+        <div id="article">
 
             <div>
 
@@ -320,7 +251,7 @@
 
         </div>
 
-        <div id="articoli">
+        <div id="article">
 
             <div>
 
