@@ -63,6 +63,34 @@
         
 <div class="ok"></div>
     <div class="box"></div>
+<script>
+    function calculate(operator) {
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        let result;
 
+        if (isNaN(num1) || isNaN(num2)) {
+            document.getElementById('result').innerText = 'Errore: Inserisci due numeri validi';
+            return;
+        }
+
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num2 !== 0 ? num1 / num2 : 'Errore: Divisione per zero';
+                break;
+        }
+
+        document.getElementById('result').innerText = 'Risultato: ' + result;
+    }
+</script>
 </body>
 </html>
