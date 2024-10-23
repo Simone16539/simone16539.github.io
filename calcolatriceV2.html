@@ -23,7 +23,7 @@
             font-size: 24px;
         }
         .small-box {
-            width: 39%;
+            width: 19%;
             height: 80px;
             background-color: lightcoral;
             margin: 10px;
@@ -41,7 +41,14 @@
 </head>
 <body>
 
-    <div class="box"><input type="text" id="expression" placeholder="Inserisci espressione (es: 3 + 5)" style="width: 90%;"></div>
+    <div class="box"><input type="number" id="numberInput" placeholder="Inserisci numero" style="width: 90%;"></div>
+
+    <div class="row">
+        <div class="small-box"><button onclick="setOperation('+')">+</button></div>
+        <div class="small-box"><button onclick="setOperation('-')">-</button></div>
+        <div class="small-box"><button onclick="setOperation('*')">*</button></div>
+        <div class="small-box"><button onclick="setOperation('/')">/</button></div>
+    </div>
 
     <div class="row">
         <div class="small-box"><button onclick="calculate()">Calcola</button></div>
@@ -51,28 +58,63 @@
     <div class="box"><h3 id="result">Risultato: </h3></div>
 
 <script>
+    let firstValue = null;
+    let operation = null;
+
+    function setOperation(op) {
+        const inputValue = document.getElementById('numberInput').value;
+        if (inputValue === '') {
+            alert('Inserisci un numero prima di selezionare un\'operazione');
+            return;
+        }
+
+        firstValue = parseFloat(inputValue);
+        operation = op;
+        document.getElementById('numberInput').value = '';  // Pulisci l'input per il secondo numero
+    }
+
     function calculate() {
-        const expression = document.getElementById('expression').value;
+        const secondValue = parseFloat(document.getElementById('numberInput').value);
         let result;
 
-        try {
-            result = eval(expression);  // Usa eval per calcolare l'espressione
-            if (isNaN(result) || !isFinite(result)) {
-                result = 'Errore: Espressione non valida';
-            }
-        } catch (e) {
-            result = 'Errore: Espressione non valida';
+        if (firstValue === null || operation === null) {
+            alert('Imposta un numero e un\'operazione prima di calcolare');
+            return;
+        }
+
+        switch (operation) {
+            case '+':
+                result = firstValue + secondValue;
+                break;
+            case '-':
+                result = firstValue - secondValue;
+                break;
+            case '*':
+                result = firstValue * secondValue;
+                break;
+            case '/':
+                if (secondValue === 0) {
+                    result = 'Errore: divisione per zero';
+                } else {
+                    result = firstValue / secondValue;
+                }
+                break;
+            default:
+                result = 'Errore: Operazione non valida';
         }
 
         document.getElementById('result').innerText = 'Risultato: ' + result;
+        firstValue = null;  // Resetta i valori per la prossima operazione
+        operation = null;
     }
 
     function clearInput() {
-        document.getElementById('expression').value = '';
+        document.getElementById('numberInput').value = '';
         document.getElementById('result').innerText = 'Risultato: ';
+        firstValue = null;
+        operation = null;
     }
 </script>
 
 </body>
 </html>
-
