@@ -16,9 +16,9 @@
         }
         .calcolatrice {
             border: 1px solid #ccc;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            background-color: white;
+            background-color: black;
         }
         input {
             width: 100%;
@@ -41,9 +41,9 @@
 <div class="calcolatrice">
     <input type="text" id="display" disabled>
     <div>
-        <button onclick="appendToDisplay('1')">1</button>
-        <button onclick="appendToDisplay('2')">2</button>
-        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
     </div>
     <div>
         <button onclick="appendToDisplay('4')">4</button>
@@ -51,9 +51,9 @@
         <button onclick="appendToDisplay('6')">6</button>  
     </div>
     <div>
-        <button onclick="appendToDisplay('7')">1</button>
-        <button onclick="appendToDisplay('8')">2</button>
-        <button onclick="appendToDisplay('9')">3</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
        
     </div>
     <div>
@@ -64,11 +64,11 @@
         <button onclick="appendToDisplay('*')">*</button>
         <button onclick="appendToDisplay('.')">.</button>
         <button onclick="calculate()">=</button>
-      
+      <button onclick="clearDisplay()">C</button>
     </div>
-    <div>
-        <button onclick="clearDisplay()">C</button>
-    </div>
+
+        
+  
 </div>
 
 <script>
