@@ -60,20 +60,26 @@
 <body>
 
     <div class="box">
-        <input type="text" id="display" class="input" placeholder="Inserisci un'espressione" onkeydown="handleKey(event)">
+        <input type="text" id="display" class="input" placeholder="Inserisci un numero" onkeydown="handleKey(event)">
     </div>
 
-    <div class="box">
-        <button onclick="clearDisplay()" class="small-box">C</button>
+    <div class="row">
+        <div class="small-box" onclick="appendToDisplay('+')">+</div>
+        <div class="small-box" onclick="appendToDisplay('-')">-</div>
+        <div class="small-box" onclick="appendToDisplay('*')">*</div>
+        <div class="small-box" onclick="appendToDisplay('/')">/</div>
+    </div>
+    <div class="row">
+        <div class="small-box" onclick="calculate()">=</div>
+        <div class="small-box" onclick="clearDisplay()">C</div>
     </div>
     
     <h3 id="result">Risultato: </h3>
 
 <script>
-    function handleKey(event) {
-        if (event.key === 'Enter') {
-            calculate();
-        }
+    function appendToDisplay(operator) {
+        const display = document.getElementById('display');
+        display.value += operator;
     }
 
     function clearDisplay() {
@@ -95,3 +101,4 @@
 </body>
 </html>
 
+Se hai bisogno di ulteriori modifiche o funzionalità, fammi sapere!
