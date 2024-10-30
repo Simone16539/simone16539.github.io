@@ -60,42 +60,20 @@
 <body>
 
     <div class="box">
-        <input type="text" id="display" class="input" placeholder="0" disabled>
+        <input type="text" id="display" class="input" placeholder="Inserisci un'espressione" onkeydown="handleKey(event)">
     </div>
-    
-    <div class="row">
-        <div class="small-box" onclick="appendToDisplay('7')">7</div>
-        <div class="small-box" onclick="appendToDisplay('8')">8</div>
-        <div class="small-box" onclick="appendToDisplay('9')">9</div>
-        <div class="small-box" onclick="appendToDisplay('/')">/</div>
-    </div>
-    <div class="row">
-        <div class="small-box" onclick="appendToDisplay('4')">4</div>
-        <div class="small-box" onclick="appendToDisplay('5')">5</div>
-        <div class="small-box" onclick="appendToDisplay('6')">6</div>
-        <div class="small-box" onclick="appendToDisplay('*')">*</div>
-    </div>
-    <div class="row">
-        <div class="small-box" onclick="appendToDisplay('1')">1</div>
-        <div class="small-box" onclick="appendToDisplay('2')">2</div>
-        <div class="small-box" onclick="appendToDisplay('3')">3</div>
-        <div class="small-box" onclick="appendToDisplay('-')">-</div>
-    </div>
-    <div class="row">
-        <div class="small-box" onclick="appendToDisplay('0')">0</div>
-        <div class="small-box" onclick="appendToDisplay('.')">.</div>
-        <div class="small-box" onclick="calculate()">=</div>
-        <div class="small-box" onclick="appendToDisplay('+')">+</div>
-    </div>
+
     <div class="box">
         <button onclick="clearDisplay()" class="small-box">C</button>
     </div>
+    
     <h3 id="result">Risultato: </h3>
 
 <script>
-    function appendToDisplay(value) {
-        const display = document.getElementById('display');
-        display.value += value;
+    function handleKey(event) {
+        if (event.key === 'Enter') {
+            calculate();
+        }
     }
 
     function clearDisplay() {
@@ -116,3 +94,4 @@
 
 </body>
 </html>
+
