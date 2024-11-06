@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo e Tabella</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .form-container, .table-container {
+            width: 45%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Inserisci Dati</h2>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome"><br><br>
+
+    <label for="cognome">Cognome:</label>
+    <input type="text" id="cognome" name="cognome"><br><br>
+
+    <label for="citta">Città:</label>
+    <input type="text" id="citta" name="citta"><br><br>
+
+    <label for="indirizzo">Indirizzo:</label>
+    <input type="text" id="indirizzo" name="indirizzo"><br><br>
+
+    <label for="codiceFiscale">Codice Fiscale:</label>
+    <input type="text" id="codiceFiscale" name="codiceFiscale"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <button onclick="aggiungiDati()">OK</button>
+</div>
+
+<div class="table-container">
+    <h2>Tabella Dati Inseriti</h2>
+    <table id="datiTabella">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Città</th>
+                <th>Indirizzo</th>
+                <th>Codice Fiscale</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- I dati verranno inseriti qui -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function aggiungiDati() {
+        // Prendi i valori dai campi del modulo
+        var nome = document.getElementById('nome').value;
+        var cognome = document.getElementById('cognome').value;
+        var citta = document.getElementById('citta').value;
+        var indirizzo = document.getElementById('indirizzo').value;
+        var codiceFiscale = document.getElementById('codiceFiscale').value;
+        var email = document.getElementById('email').value;
+
+        // Crea una nuova riga nella tabella
+        var tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
+        var nuovaRiga = tabella.insertRow();
+
+        // Crea e aggiungi le celle alla riga
+        nuovaRiga.insertCell(0).textContent = nome;
+        nuovaRiga.insertCell(1).textContent = cognome;
+        nuovaRiga.insertCell(2).textContent = citta;
+        nuovaRiga.insertCell(3).textContent = indirizzo;
+        nuovaRiga.insertCell(4).textContent = codiceFiscale;
+        nuovaRiga.insertCell(5).textContent = email;
+
+        // Pulisci i campi del modulo
+        document.getElementById('nome').value = '';
+        document.getElementById('cognome').value = '';
+        document.getElementById('citta').value = '';
+        document.getElementById('indirizzo').value = '';
+        document.getElementById('codiceFiscale').value = '';
+        document.getElementById('email').value = '';
+    }
+</script>
+
+</body>
+</html>
