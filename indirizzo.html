@@ -7,46 +7,68 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
             display: flex;
-            justify-content: space-between;
-            margin: 20px;
+            justify-content: space-around;
+            align-items: flex-start;
+            height: 100vh;
         }
 
         .form-container, .table-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 45%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
 
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
             background-color: #f2f2f2;
         }
 
-        input[type="text"], input[type="email"] {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
+        td {
+            background-color: #fafafa;
         }
     </style>
 </head>
@@ -54,25 +76,13 @@
 
 <div class="form-container">
     <h2>Inserisci Dati</h2>
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome"><br><br>
-
-    <label for="cognome">Cognome:</label>
-    <input type="text" id="cognome" name="cognome"><br><br>
-
-    <label for="citta">Città:</label>
-    <input type="text" id="citta" name="citta"><br><br>
-
-    <label for="indirizzo">Indirizzo:</label>
-    <input type="text" id="indirizzo" name="indirizzo"><br><br>
-
-    <label for="codiceFiscale">Codice Fiscale:</label>
-    <input type="text" id="codiceFiscale" name="codiceFiscale"><br><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br><br>
-
-    <button onclick="aggiungiDati()">OK</button>
+    <input type="text" id="nome" placeholder="Nome">
+    <input type="text" id="cognome" placeholder="Cognome">
+    <input type="text" id="citta" placeholder="Città">
+    <input type="text" id="indirizzo" placeholder="Indirizzo">
+    <input type="text" id="codiceFiscale" placeholder="Codice Fiscale">
+    <input type="email" id="email" placeholder="Email">
+    <button onclick="aggiungiDati()">Aggiungi</button>
 </div>
 
 <div class="table-container">
@@ -89,40 +99,38 @@
             </tr>
         </thead>
         <tbody>
-            <!-- I dati verranno inseriti qui -->
+            <!-- Dati inseriti -->
         </tbody>
     </table>
 </div>
 
 <script>
     function aggiungiDati() {
-        // Prendi i valori dai campi del modulo
-        var nome = document.getElementById('nome').value;
-        var cognome = document.getElementById('cognome').value;
-        var citta = document.getElementById('citta').value;
-        var indirizzo = document.getElementById('indirizzo').value;
-        var codiceFiscale = document.getElementById('codiceFiscale').value;
-        var email = document.getElementById('email').value;
+        const nome = document.getElementById('nome').value;
+        const cognome = document.getElementById('cognome').value;
+        const citta = document.getElementById('citta').value;
+        const indirizzo = document.getElementById('indirizzo').value;
+        const codiceFiscale = document.getElementById('codiceFiscale').value;
+        const email = document.getElementById('email').value;
 
-        // Crea una nuova riga nella tabella
-        var tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
-        var nuovaRiga = tabella.insertRow();
+        if (nome && cognome && citta && indirizzo && codiceFiscale && email) {
+            const tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
+            const nuovaRiga = tabella.insertRow();
 
-        // Crea e aggiungi le celle alla riga
-        nuovaRiga.insertCell(0).textContent = nome;
-        nuovaRiga.insertCell(1).textContent = cognome;
-        nuovaRiga.insertCell(2).textContent = citta;
-        nuovaRiga.insertCell(3).textContent = indirizzo;
-        nuovaRiga.insertCell(4).textContent = codiceFiscale;
-        nuovaRiga.insertCell(5).textContent = email;
+            nuovaRiga.innerHTML = `
+                <td>${nome}</td>
+                <td>${cognome}</td>
+                <td>${citta}</td>
+                <td>${indirizzo}</td>
+                <td>${codiceFiscale}</td>
+                <td>${email}</td>
+            `;
 
-        // Pulisci i campi del modulo
-        document.getElementById('nome').value = '';
-        document.getElementById('cognome').value = '';
-        document.getElementById('citta').value = '';
-        document.getElementById('indirizzo').value = '';
-        document.getElementById('codiceFiscale').value = '';
-        document.getElementById('email').value = '';
+            // Pulisci i campi
+            document.querySelectorAll('input').forEach(input => input.value = '');
+        } else {
+            alert("Tutti i campi devono essere compilati!");
+        }
     }
 </script>
 
