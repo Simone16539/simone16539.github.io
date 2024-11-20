@@ -145,12 +145,6 @@
         var codiceFiscale = document.getElementById('codiceFiscale').value;
         var email = document.getElementById('email').value;
 
-        // Verifica che tutti i campi siano compilati
-        if (!nome || !cognome || !citta || !indirizzo || !codiceFiscale || !email) {
-            alert("Per favore, compila tutti i campi.");
-            return;
-        }
-
         // Crea una nuova riga nella tabella
         var tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
         var nuovaRiga = tabella.insertRow();
