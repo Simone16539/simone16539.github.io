@@ -61,9 +61,6 @@
         <button onclick="calculate()">=</button>
         <button onclick="clearDisplay()">CE</button>
     </div>
-
-        
-  
 </div>
 
 <script>
@@ -78,8 +75,11 @@
 
     function calculate() {
         const display = document.getElementById('display');
+        const expression = display.value;
+
         try {
-            display.value = eval(display.value);
+            // Sostituire eval() con un metodo sicuro per valutare l'espressione
+            display.value = new Function('return ' + expression)();
         } catch (error) {
             display.value = 'Errore';
         }
@@ -88,3 +88,4 @@
 
 </body>
 </html>
+
