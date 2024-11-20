@@ -78,7 +78,7 @@
         const expression = display.value;
 
         try {
-            // Sostituire eval() con un metodo sicuro per valutare l'espressione
+  
             display.value = new Function('return ' + expression)();
         } catch (error) {
             display.value = 'Errore';
