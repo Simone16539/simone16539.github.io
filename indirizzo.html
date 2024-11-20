@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -6,90 +7,132 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
             display: flex;
             justify-content: space-between;
-            margin: 20px;
+            width: 90%;
+            max-width: 1200px;
         }
 
         .form-container, .table-container {
-            width: 45%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
+        label {
+            font-size: 14px;
+            color: #555;
         }
 
         input[type="text"], input[type="email"] {
             width: 100%;
-            padding: 8px;
-            margin: 5px 0;
+            padding: 10px;
+            margin: 10px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
         }
 
         button {
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
         button:hover {
             background-color: #45a049;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Inserisci Dati</h2>
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome"><br><br>
+<div class="container">
+    <div class="form-container">
+        <h2>Inserisci Dati</h2>
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome">
 
-    <label for="cognome">Cognome:</label>
-    <input type="text" id="cognome" name="cognome"><br><br>
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome">
 
-    <label for="citta">Città:</label>
-    <input type="text" id="citta" name="citta"><br><br>
+        <label for="citta">Città</label>
+        <input type="text" id="citta" name="citta" placeholder="Inserisci la tua città">
 
-    <label for="indirizzo">Indirizzo:</label>
-    <input type="text" id="indirizzo" name="indirizzo"><br><br>
+        <label for="indirizzo">Indirizzo</label>
+        <input type="text" id="indirizzo" name="indirizzo" placeholder="Inserisci il tuo indirizzo">
 
-    <label for="codiceFiscale">Codice Fiscale:</label>
-    <input type="text" id="codiceFiscale" name="codiceFiscale"><br><br>
+        <label for="codiceFiscale">Codice Fiscale</label>
+        <input type="text" id="codiceFiscale" name="codiceFiscale" placeholder="Inserisci il tuo codice fiscale">
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br><br>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Inserisci la tua email">
 
-    <button onclick="aggiungiDati()">OK</button>
-</div>
+        <button onclick="aggiungiDati()">Aggiungi</button>
+    </div>
 
-<div class="table-container">
-    <h2>Tabella Dati Inseriti</h2>
-    <table id="datiTabella">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Città</th>
-                <th>Indirizzo</th>
-                <th>Codice Fiscale</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <h2>Tabella Dati Inseriti</h2>
+        <table id="datiTabella">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Città</th>
+                    <th>Indirizzo</th>
+                    <th>Codice Fiscale</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- I dati verranno inseriti qui -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -101,6 +144,12 @@
         var indirizzo = document.getElementById('indirizzo').value;
         var codiceFiscale = document.getElementById('codiceFiscale').value;
         var email = document.getElementById('email').value;
+
+        // Verifica che tutti i campi siano compilati
+        if (!nome || !cognome || !citta || !indirizzo || !codiceFiscale || !email) {
+            alert("Per favore, compila tutti i campi.");
+            return;
+        }
 
         // Crea una nuova riga nella tabella
         var tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
@@ -114,7 +163,7 @@
         nuovaRiga.insertCell(4).textContent = codiceFiscale;
         nuovaRiga.insertCell(5).textContent = email;
 
-        // Pulisci
+        // Pulisci i campi del modulo
         document.getElementById('nome').value = '';
         document.getElementById('cognome').value = '';
         document.getElementById('citta').value = '';
@@ -122,5 +171,7 @@
         document.getElementById('codiceFiscale').value = '';
         document.getElementById('email').value = '';
     }
-</script> 
+</script>
+
+</body>
 </html>
