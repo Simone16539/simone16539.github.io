@@ -120,7 +120,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- I dati verranno inseriti qui -->
             </tbody>
         </table>
     </div>
@@ -128,7 +127,7 @@
 
 <script>
     function aggiungiDati() {
-        // Prendi i valori dai campi del modulo
+       
         var nome = document.getElementById('nome').value;
         var cognome = document.getElementById('cognome').value;
         var citta = document.getElementById('citta').value;
@@ -136,11 +135,11 @@
         var codiceFiscale = document.getElementById('codiceFiscale').value;
         var email = document.getElementById('email').value;
 
-        // Crea una nuova riga nella tabella
+
         var tabella = document.getElementById('datiTabella').getElementsByTagName('tbody')[0];
         var nuovaRiga = tabella.insertRow();
 
-        // Crea e aggiungi le celle alla riga
+     
         nuovaRiga.insertCell(0).textContent = nome;
         nuovaRiga.insertCell(1).textContent = cognome;
         nuovaRiga.insertCell(2).textContent = citta;
@@ -148,7 +147,7 @@
         nuovaRiga.insertCell(4).textContent = codiceFiscale;
         nuovaRiga.insertCell(5).textContent = email;
 
-        // Pulisci i campi del modulo
+   
         document.getElementById('nome').value = '';
         document.getElementById('cognome').value = '';
         document.getElementById('citta').value = '';
