@@ -75,11 +75,11 @@
 
     function calculate() {
         const display = document.getElementById('display');
-        let expression = display.value.replace(/,/g, '.'); // Sostituisce la virgola con il punto
+        let expression = display.value.replace(/,/g, '.'); 
 
         try {
             let result = parseExpression(expression);
-            display.value = result.toString().replace(/\./g, ','); // Sostituisce il punto con la virgola
+            display.value = result.toString().replace(/\./g, ',');
         } catch {
             display.value = 'Errore';
         }
