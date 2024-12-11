@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabella Dati</title>
+</head>
+<body>
+    <h2>Tabella dei Dati Inseriti</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Città</th>
+                <th>Indirizzo</th>
+                <th>Codice Fiscale</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="tabellaDatiBody">
+            <!-- Dati inseriti dinamicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Recupera i dati dal localStorage
+        const dati = localStorage.getItem('datiUtente');
+
+        if (dati) {
+            const datiArray = dati.split(',');
+
+            const tabellaBody = document.getElementById('tabellaDatiBody');
+            const nuovaRiga = document.createElement('tr');
+
+            datiArray.forEach(valore => {
+                const cella = document.createElement('td');
+                cella.textContent = valore.trim();
+                nuovaRiga.appendChild(cella);
+            });
+
+            tabellaBody.appendChild(nuovaRiga);
+        }
+    </script>
+</body>
+</html>
