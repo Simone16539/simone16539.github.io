@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo e Tabella</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .form-container, .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Inserisci Dati</h2>
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome">
+
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome">
+
+        <label for="citta">Città</label>
+        <input type="text" id="citta" name="citta" placeholder="Inserisci la tua città">
+
+        <label for="indirizzo">Indirizzo</label>
+        <input type="text" id="indirizzo" name="indirizzo" placeholder="Inserisci il tuo indirizzo">
+
+        <label for="codiceFiscale">Codice Fiscale</label>
+        <input type="text" id="codiceFiscale" name="codiceFiscale" placeholder="Inserisci il tuo codice fiscale">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Inserisci la tua email">
+
+        <button onclick="salvaEDirigi()">Salva e Visualizza Tabella</button>
+    </div>
+</div>
+
+<script>
+    // Funzione per salvare i dati nel localStorage e reindirizzare alla pagina tabella
+    function salvaEDirigi() {
+        const nome = document.getElementById('nome').value;
+        const cognome = document.getElementById('cognome').value;
+        const citta = document.getElementById('citta').value;
+        const indirizzo = document.getElementById('indirizzo').value;
+        const codiceFiscale = document.getElementById('codiceFiscale').value;
+        const email = document.getElementById('email').value;
+
+        if (!nome || !cognome || !citta || !indirizzo || !codiceFiscale || !email) {
+            alert('Tutti i campi sono obbligatori!');
+            return;
+        }
+
+        const dati = `${nome},${cognome},${citta},${indirizzo},${codiceFiscale},${email}`;
+        localStorage.setItem('datiUtente', dati);
+
+        location.href = 'tabella.html';
+    }
+</script>
+
+</body>
+</html>
