@@ -1,0 +1,38 @@
+<html>
+<head>
+    <script>
+        function apri(input) {
+            let file = input.files[0];
+
+            let reader = new FileReader();
+
+            reader.readAsText(file);
+
+            reader.onload = function () {
+                const content = reader.result;
+                const rows = content.split("\n").map(row => row.split(","));
+
+                let table = "<table border='1'>";
+                rows.forEach((row, index) => {
+                    table += "<tr>";
+                    row.forEach(cell => {
+                        table += index === 0 ? `<th>${cell.trim()}</th>` : `<td>${cell.trim()}</td>`;
+                    });
+                    table += "</tr>";
+                });
+                table += "</table>";
+
+                document.getElementById("contenuto").innerHTML = table;
+            };
+
+            reader.onerror = function () {
+                console.error("Errore nella lettura del file:", reader.error);
+            };
+        }
+    </script>
+</head>
+<body>
+    <input type="file" id="myfile" name="seleziona file" onchange="apri(this)">
+    <div id="contenuto"></div>
+</body>
+</html>
