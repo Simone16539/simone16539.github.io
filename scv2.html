@@ -43,7 +43,7 @@
             const values = rows.slice(1).map(row => parseFloat(row[1]) || 0);
             
             const ctx = document.getElementById('grafico').getContext('2d');
-            if (window.myChart) {
+            if (window.myCanvas) {
                 window.myChart.destroy();
             }
             window.myChart = new Chart(ctx, {
