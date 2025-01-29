@@ -1,0 +1,70 @@
+!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function apri(input) {
+            let file = input.files[0];
+            let reader = new FileReader();
+
+            reader.readAsText(file);
+            reader.onload = function () {
+                const content = reader.result;
+                const rows = content.split("\n").map(row => row.split(","));
+
+                let table = "<table border='1'>";
+                rows.forEach((row, index) => {
+                    table += "<tr>";
+                    row.forEach(cell => {
+                        table += index === 0 ? `<th>${cell.trim()}</th>` : `<td>${cell.trim()}</td>`;
+                    });
+                    table += "</tr>";
+                });
+                table += "</table>";
+                document.getElementById("contenuto").innerHTML = table;
+
+                if (rows.length > 1) {
+                    generaGrafico(rows);
+                }
+            };
+
+            reader.onerror = function () {
+                console.error("Errore nella lettura del file:", reader.error);
+            };
+        }
+
+        function generaGrafico(rows) {
+            const labels = rows.slice(1).map(row => row[0].trim());
+            const values = rows.slice(1).map(row => parseFloat(row[1]));
+            
+            const ctx = document.getElementById('grafico').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: rows[0][1].trim(),
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="file" id="myfile" name="seleziona file" onchange="apri(this)">
+    <div id="contenuto"></div>
+    <canvas id="grafico" width="400" height="200"></canvas>
+</body>
+</html>
