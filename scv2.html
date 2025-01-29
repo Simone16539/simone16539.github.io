@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function apri(input) {
             let file = input.files[0];
@@ -42,29 +41,30 @@
             const labels = rows.slice(1).map(row => row[0]);
             const values = rows.slice(1).map(row => parseFloat(row[1]) || 0);
             
-            const ctx = document.getElementById('grafico').getContext('2d');
-            if (window.myCanvas) {
-                window.canvas.destroy();
-            }
-            window.myChart = window.canvas = new CanvasRenderingContext2D(ctx);
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: rows[0][1],
-                        data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
+            const canvas = document.getElementById('grafico');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            
+            const maxVal = Math.max(...values);
+            const minVal = Math.min(...values);
+            const scaleX = canvas.width / (values.length - 1);
+            const scaleY = canvas.height / (maxVal - minVal || 1);
+            
+            values.forEach((val, i) => {
+                const x = i * scaleX;
+                const y = canvas.height - (val - minVal) * scaleY;
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
                 }
             });
+            
+            ctx.stroke();
         }
     </script>
 </head>
