@@ -11,23 +11,26 @@
 
             reader.readAsText(file);
             reader.onload = function () {
-                const content = reader.result;
-                const rows = content.split("\n").map(row => row.split(","));
-
+                const content = reader.result.trim();
+                const rows = content.split("\n").map(row => row.split(",").map(cell => cell.trim()));
+                
+                if (rows.length < 2 || rows[0].length < 2) {
+                    alert("Il file CSV deve contenere almeno due colonne.");
+                    return;
+                }
+                
                 let table = "<table border='1'>";
                 rows.forEach((row, index) => {
                     table += "<tr>";
                     row.forEach(cell => {
-                        table += index === 0 ? `<th>${cell.trim()}</th>` : `<td>${cell.trim()}</td>`;
+                        table += index === 0 ? `<th>${cell}</th>` : `<td>${cell}</td>`;
                     });
                     table += "</tr>";
                 });
                 table += "</table>";
                 document.getElementById("contenuto").innerHTML = table;
 
-                if (rows.length > 1) {
-                    generaGrafico(rows);
-                }
+                generaGrafico(rows);
             };
 
             reader.onerror = function () {
@@ -36,16 +39,19 @@
         }
 
         function generaGrafico(rows) {
-            const labels = rows.slice(1).map(row => row[0].trim());
-            const values = rows.slice(1).map(row => parseFloat(row[1]));
+            const labels = rows.slice(1).map(row => row[0]);
+            const values = rows.slice(1).map(row => parseFloat(row[1]) || 0);
             
             const ctx = document.getElementById('grafico').getContext('2d');
-            new Chart(ctx, {
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+            window.myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: rows[0][1].trim(),
+                        label: rows[0][1],
                         data: values,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
