@@ -44,10 +44,10 @@
             
             const ctx = document.getElementById('grafico').getContext('2d');
             if (window.myCanvas) {
-                window.myChart.destroy();
+                window.canvas.destroy();
             }
-            window.myChart = new Chart(ctx, {
-                type: 'bar',
+            window.myChart = window.canvas = new CanvasRenderingContext2D(ctx);
+                type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
