@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Chart</title>
+    <title>Grafico CSV</title>
 </head>
 <body>
     <input type="file" id="csvFileInput" accept=".csv">
     <canvas id="myChart" width="1870" height="800"></canvas>
     <script>
-        // Function to parse CSV data
+        // Funzione per analizzare i dati CSV
         function parseCSV(data) {
             const rows = data.trim().split('\n');
             return rows.map(row => row.split(',').map(Number));
         }
 
-        // Function to draw chart
+        // Funzione per disegnare il grafico
         function drawChart(data) {
             const canvas = document.getElementById('myChart');
             const ctx = canvas.getContext('2d');
@@ -23,37 +23,37 @@
             const migrants = data.map(row => row[1]);
 
             const maxVal = Math.ceil(Math.max(...migrants) / 20000) * 20000;
-            const barWidth = (canvas.width - 50) / migrants.length; // Leave space for Y-axis labels
+            const barWidth = (canvas.width - 50) / migrants.length; // Lascia spazio per le etichette dell'asse Y
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw bars
+            // Disegna le barre
             migrants.forEach((value, index) => {
-                const barHeight = (value / maxVal) * (canvas.height - 50); // Leave space for labels
+                const barHeight = (value / maxVal) * (canvas.height - 50); // Lascia spazio per le etichette
                 ctx.fillStyle = 'blue';
-                ctx.fillRect(50 + index * barWidth, canvas.height - barHeight - 30, barWidth - 2, barHeight); // Leave space for labels
+                ctx.fillRect(50 + index * barWidth, canvas.height - barHeight - 30, barWidth - 2, barHeight); // Lascia spazio per le etichette
             });
 
-            // Draw X-axis
+            // Disegna l'asse X
             ctx.beginPath();
             ctx.moveTo(50, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
 
-            // Draw Y-axis
+            // Disegna l'asse Y
             ctx.beginPath();
             ctx.moveTo(50, 0);
             ctx.lineTo(50, canvas.height - 30);
             ctx.stroke();
 
-            // Draw year labels on X-axis
+            // Disegna le etichette degli anni sull'asse X
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             years.forEach((year, index) => {
                 ctx.fillText(year, 50 + index * barWidth + barWidth / 2, canvas.height - 10);
             });
 
-            // Draw Y-axis labels
+            // Disegna le etichette dell'asse Y
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             for (let i = 0; i <= maxVal; i += 20000) {
@@ -67,7 +67,7 @@
             }
         }
 
-        // Function to handle file input change
+        // Funzione per gestire il cambiamento del file di input
         document.getElementById('csvFileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
