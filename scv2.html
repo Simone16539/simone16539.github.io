@@ -7,56 +7,51 @@
 </head>
 <body>
     <input type="file" id="inputFileCSV" accept=".csv">
-    <canvas id="mioGrafico" width="1870" height="800"></canvas>
+    <canvas id="graficoMio" width="1870" height="800"></canvas>
     <script>
-        
         function analizzaCSV(dati) {
             const righe = dati.trim().split('\n');
             return righe.map(riga => riga.split(',').map(Number));
         }
 
-        
         function disegnaGrafico(dati) {
-            const canvas = document.getElementById('mioGrafico');
+            const canvas = document.getElementById('graficoMio');
             const ctx = canvas.getContext('2d');
             const anni = dati.map(riga => riga[0]);
             const migranti = dati.map(riga => riga[1]);
 
-            const maxVal = Math.ceil(Math.max(...migranti) / 20000) * 20000;
-            const larghezzaBarra = (canvas.width - 50) / migranti.length; 
+            const valoreMassimo = Math.ceil(Math.max(...migranti) / 20000) * 20000;
+            const larghezzaBarra = (canvas.width - 50) / migranti.length;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            
             migranti.forEach((valore, indice) => {
-                const altezzaBarra = (valore / maxVal) * (canvas.height - 50); 
+                const altezzaBarra = (valore / valoreMassimo) * (canvas.height - 50);
                 ctx.fillStyle = 'blue';
                 ctx.fillRect(50 + indice * larghezzaBarra, canvas.height - altezzaBarra - 30, larghezzaBarra - 2, altezzaBarra);
-                ctx.fillText(value, 50 + index * barWidth + barWidth / 2, canvas.height - barHeight - 35);
+                ctx.fillText(valore, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - altezzaBarra - 35);
             });
 
-           
             ctx.beginPath();
             ctx.moveTo(50, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
 
-            
             ctx.beginPath();
             ctx.moveTo(50, 0);
             ctx.lineTo(50, canvas.height - 30);
             ctx.stroke();
-            
+
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             anni.forEach((anno, indice) => {
                 ctx.fillText(anno, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - 10);
-                
             });
+
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
-            for (let i = 0; i <= maxVal; i += 20000) {
-                const y = canvas.height - 30 - (i / maxVal) * (canvas.height - 50);
+            for (let i = 0; i <= valoreMassimo; i += 20000) {
+                const y = canvas.height - 30 - (i / valoreMassimo) * (canvas.height - 50);
                 ctx.fillText(i, 45, y);
                 ctx.beginPath();
                 ctx.moveTo(50, y);
@@ -65,6 +60,7 @@
                 ctx.stroke();
             }
         }
+
         document.getElementById('inputFileCSV').addEventListener('change', function(evento) {
             const file = evento.target.files[0];
             if (file) {
@@ -79,3 +75,4 @@
     </script>
 </body>
 </html>
+
