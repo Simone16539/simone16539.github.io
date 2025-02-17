@@ -9,13 +9,13 @@
     <input type="file" id="inputFileCSV" accept=".csv">
     <canvas id="mioGrafico" width="1870" height="800"></canvas>
     <script>
-        // Funzione per analizzare i dati CSV
+        
         function analizzaCSV(dati) {
             const righe = dati.trim().split('\n');
             return righe.map(riga => riga.split(',').map(Number));
         }
 
-        // Funzione per disegnare il grafico
+        
         function disegnaGrafico(dati) {
             const canvas = document.getElementById('mioGrafico');
             const ctx = canvas.getContext('2d');
@@ -23,37 +23,36 @@
             const migranti = dati.map(riga => riga[1]);
 
             const maxVal = Math.ceil(Math.max(...migranti) / 20000) * 20000;
-            const larghezzaBarra = (canvas.width - 50) / migranti.length; // Lascia spazio per le etichette dell'asse Y
+            const larghezzaBarra = (canvas.width - 50) / migranti.length; 
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Disegna le barre
+            
             migranti.forEach((valore, indice) => {
-                const altezzaBarra = (valore / maxVal) * (canvas.height - 50); // Lascia spazio per le etichette
+                const altezzaBarra = (valore / maxVal) * (canvas.height - 50); 
                 ctx.fillStyle = 'blue';
-                ctx.fillRect(50 + indice * larghezzaBarra, canvas.height - altezzaBarra - 30, larghezzaBarra - 2, altezzaBarra); // Lascia spazio per le etichette
+                ctx.fillRect(50 + indice * larghezzaBarra, canvas.height - altezzaBarra - 30, larghezzaBarra - 2, altezzaBarra);
+                ctx.fillText(value, 50 + index * barWidth + barWidth / 2, canvas.height - barHeight - 35);
             });
 
-            // Disegna l'asse X
+           
             ctx.beginPath();
             ctx.moveTo(50, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
 
-            // Disegna l'asse Y
+            
             ctx.beginPath();
             ctx.moveTo(50, 0);
             ctx.lineTo(50, canvas.height - 30);
             ctx.stroke();
-
-            // Disegna le etichette degli anni sull'asse X
+            
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             anni.forEach((anno, indice) => {
                 ctx.fillText(anno, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - 10);
+                
             });
-
-            // Disegna le etichette dell'asse Y
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             for (let i = 0; i <= maxVal; i += 20000) {
@@ -66,8 +65,6 @@
                 ctx.stroke();
             }
         }
-
-        // Funzione per gestire il cambiamento dell'input file
         document.getElementById('inputFileCSV').addEventListener('change', function(evento) {
             const file = evento.target.files[0];
             if (file) {
