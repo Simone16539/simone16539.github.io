@@ -1,76 +1,84 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        function apri(input) {
-            let file = input.files[0];
-            let reader = new FileReader();
-
-            reader.readAsText(file);
-            reader.onload = function () {
-                const content = reader.result.trim();
-                const rows = content.split("\n").map(row => row.split(",").map(cell => cell.trim()));
-                
-                if (rows.length < 2 || rows[0].length < 2) {
-                    alert("Il file CSV deve contenere almeno due colonne.");
-                    return;
-                }
-                
-                let table = "<table border='1'>";
-                rows.forEach((row, index) => {
-                    table += "<tr>";
-                    row.forEach(cell => {
-                        table += index === 0 ? `<th>${cell}</th>` : `<td>${cell}</td>`;
-                    });
-                    table += "</tr>";
-                });
-                table += "</table>";
-                document.getElementById("contenuto").innerHTML = table;
-
-                generaGrafico(rows);
-            };
-
-            reader.onerror = function () {
-                console.error("Errore nella lettura del file:", reader.error);
-            };
-        }
-
-        function generaGrafico(rows) {
-            const labels = rows.slice(1).map(row => row[0]);
-            const values = rows.slice(1).map(row => parseFloat(row[1]) || 0);
-            
-            const canvas = document.getElementById('grafico');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.beginPath();
-            ctx.strokeStyle = 'blue';
-            ctx.lineWidth = 2;
-            
-            const maxVal = Math.max(...values);
-            const minVal = Math.min(...values);
-            const scaleX = canvas.width / (values.length - 1);
-            const scaleY = canvas.height / (maxVal - minVal || 1);
-            
-            values.forEach((val, i) => {
-                const x = i * scaleX;
-                const y = canvas.height - (val - minVal) * scaleY;
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            });
-            
-            ctx.stroke();
-        }
-    </script>
+    <title>CSV Chart</title>
 </head>
 <body>
-    <input type="file" id="myfile" name="seleziona file" onchange="apri(this)">
-    <div id="contenuto"></div>
-    <canvas id="grafico" width="400" height="200"></canvas>
+    <input type="file" id="csvFileInput" accept=".csv">
+    <canvas id="myChart" width="1870" height="800"></canvas>
+    <script>
+        // Function to parse CSV data
+        function parseCSV(data) {
+            const rows = data.trim().split('\n');
+            return rows.map(row => row.split(',').map(Number));
+        }
+
+        // Function to draw chart
+        function drawChart(data) {
+            const canvas = document.getElementById('myChart');
+            const ctx = canvas.getContext('2d');
+            const years = data.map(row => row[0]);
+            const migrants = data.map(row => row[1]);
+
+            const maxVal = Math.ceil(Math.max(...migrants) / 20000) * 20000;
+            const barWidth = (canvas.width - 50) / migrants.length; // Leave space for Y-axis labels
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw bars
+            migrants.forEach((value, index) => {
+                const barHeight = (value / maxVal) * (canvas.height - 50); // Leave space for labels
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(50 + index * barWidth, canvas.height - barHeight - 30, barWidth - 2, barHeight); // Leave space for labels
+            });
+
+            // Draw X-axis
+            ctx.beginPath();
+            ctx.moveTo(50, canvas.height - 30);
+            ctx.lineTo(canvas.width, canvas.height - 30);
+            ctx.stroke();
+
+            // Draw Y-axis
+            ctx.beginPath();
+            ctx.moveTo(50, 0);
+            ctx.lineTo(50, canvas.height - 30);
+            ctx.stroke();
+
+            // Draw year labels on X-axis
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            years.forEach((year, index) => {
+                ctx.fillText(year, 50 + index * barWidth + barWidth / 2, canvas.height - 10);
+            });
+
+            // Draw Y-axis labels
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let i = 0; i <= maxVal; i += 20000) {
+                const y = canvas.height - 30 - (i / maxVal) * (canvas.height - 50);
+                ctx.fillText(i, 45, y);
+                ctx.beginPath();
+                ctx.moveTo(50, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.stroke();
+            }
+        }
+
+        // Function to handle file input change
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const data = parseCSV(e.target.result);
+                    drawChart(data);
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
 </body>
 </html>
