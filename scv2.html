@@ -31,23 +31,23 @@
                 ctx.fillRect(50 + indice * larghezzaBarra, canvas.height - altezzaBarra - 30, larghezzaBarra - 2, altezzaBarra);
                 ctx.fillText(valore, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - altezzaBarra - 35);
             });
-
+//asse x
             ctx.beginPath();
             ctx.moveTo(50, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
-
+//asse y
             ctx.beginPath();
             ctx.moveTo(50, 0);
             ctx.lineTo(50, canvas.height - 30);
             ctx.stroke();
-
+//etichette x
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             anni.forEach((anno, indice) => {
                 ctx.fillText(anno, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - 10);
             });
-
+//etichette y
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             for (let i = 0; i <= valoreMassimo; i += 20000) {
