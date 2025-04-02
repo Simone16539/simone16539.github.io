@@ -21,33 +21,29 @@
             const migranti = dati.map(riga => riga[1]);
 
             const valoreMassimo = Math.ceil(Math.max(...migranti) / 20000) * 20000;
-            const larghezzaBarra = (canvas.width - 50) / migranti.length;
+            const larghezzaSegmento = (canvas.width - 100) / (migranti.length - 1);
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            migranti.forEach((valore, indice) => {
-                const altezzaBarra = (valore / valoreMassimo) * (canvas.height - 50);
-                ctx.fillStyle = 'blue';
-                ctx.fillRect(50 + indice * larghezzaBarra, canvas.height - altezzaBarra - 30, larghezzaBarra - 2, altezzaBarra);
-                ctx.fillText(valore, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - altezzaBarra - 35);
-            });
-//asse x
+            // Disegna gli assi
             ctx.beginPath();
             ctx.moveTo(50, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
-//asse y
+
             ctx.beginPath();
             ctx.moveTo(50, 0);
             ctx.lineTo(50, canvas.height - 30);
             ctx.stroke();
-//etichette x
+
+            // Etichette X (Anni)
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             anni.forEach((anno, indice) => {
-                ctx.fillText(anno, 50 + indice * larghezzaBarra + larghezzaBarra / 2, canvas.height - 10);
+                ctx.fillText(anno, 50 + indice * larghezzaSegmento, canvas.height - 10);
             });
-//etichette y
+
+            // Etichette Y (Numero di immigrati)
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             for (let i = 0; i <= valoreMassimo; i += 20000) {
@@ -59,6 +55,33 @@
                 ctx.strokeStyle = '#e0e0e0';
                 ctx.stroke();
             }
+
+            // Disegna la linea continua
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+
+            for (let i = 0; i < migranti.length; i++) {
+                const x = 50 + i * larghezzaSegmento;
+                const y = canvas.height - 30 - (migranti[i] / valoreMassimo) * (canvas.height - 50);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Disegna i punti della linea
+            ctx.fillStyle = 'red';
+            migranti.forEach((valore, indice) => {
+                const x = 50 + indice * larghezzaSegmento;
+                const y = canvas.height - 30 - (valore / valoreMassimo) * (canvas.height - 50);
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
         }
 
         document.getElementById('inputFileCSV').addEventListener('change', function(evento) {
@@ -75,4 +98,3 @@
     </script>
 </body>
 </html>
-
