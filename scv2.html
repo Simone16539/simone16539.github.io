@@ -11,8 +11,8 @@
     <script>
         function analizzaCSV(dati) {
             const righe = dati.trim().split('\n');
-            const intestazioni = righe[0].split(','); // Prende la prima riga come intestazione
-            const datiNumerici = righe.slice(1).map(riga => riga.split(',').map(Number)); // Converte il resto in numeri
+            const intestazioni = righe[0].split(','); 
+            const datiNumerici = righe.slice(1).map(riga => riga.split(',').map(Number)); 
             return { intestazioni, datiNumerici };
         }
 
@@ -29,7 +29,7 @@
 
             // Disegna gli assi
             ctx.beginPath();
-            ctx.moveTo(70, canvas.height - 30); // Spostato l'asse Y a destra per evitare sovrapposizioni
+            ctx.moveTo(70, canvas.height - 30);
             ctx.lineTo(canvas.width, canvas.height - 30);
             ctx.stroke();
 
@@ -50,7 +50,7 @@
             ctx.textBaseline = 'middle';
             for (let i = 0; i <= valoreMassimo; i += 20000) {
                 const y = canvas.height - 30 - (i / valoreMassimo) * (canvas.height - 50);
-                ctx.fillText(i, 65, y); // Spostato leggermente a sinistra per migliorare la leggibilità
+                ctx.fillText(i, 65, y);
                 ctx.beginPath();
                 ctx.moveTo(70, y);
                 ctx.lineTo(canvas.width, y);
