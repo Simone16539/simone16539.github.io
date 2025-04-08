@@ -1,38 +1,42 @@
 <html>
+<!DOCTYPE html>
+<html>
 <head>
+    <title>Dati sbarchi</title>
     <script>
         function apri(input) {
             let file = input.files[0];
-
-            let reader = new FileReader();
-
-            reader.readAsText(file);
-
-            reader.onload = function () {
-                const content = reader.result;
-                const rows = content.split("\n").map(row => row.split(","));
-
-                let table = "<table border='1'>";
-                rows.forEach((row, index) => {
-                    table += "<tr>";
-                    row.forEach(cell => {
-                        table += index === 0 ? `<th>${cell.trim()}</th>` : `<td>${cell.trim()}</td>`;
-                    });
-                    table += "</tr>";
-                });
-                table += "</table>";
-
-                document.getElementById("contenuto").innerHTML = table;
+            let lettore = new FileReader()
+            lettore.readAsText(file);
+            lettore.onload = function () {
+                let contenuto = lettore.result;
+                contenuto = contenuto.replaceAll('"', '');
+                let righe = contenuto.split('\n');
+                let tabella = '<table border="1">';
+                for (let i = 0; i < righe.length; i++) {
+                    let celle = righe[i].split(',');
+                    tabella += '<tr>';
+                    for (let j = 0; j < celle.length; j++) {
+                        if (i == 0) {
+                            tabella += '<th>' + celle[j].trim() + '</th>';
+                        } else {
+                            tabella += '<td>' + celle[j].trim() + '</td>';
+                        }
+                    }
+                    tabella += '</tr>';
+                }
+                tabella += '</table>';
+                document.getElementById("contenuto").innerHTML = tabella;
             };
-
-            reader.onerror = function () {
-                console.error("Errore nella lettura del file:", reader.error);
+            lettore.onerror = function () {
+                console.log("Errore nella lettura del file.");
             };
         }
     </script>
 </head>
 <body>
-    <input type="file" id="myfile" name="seleziona file" onchange="apri(this)">
+    <h2>Carica un file CSV:</h2>
+    <input type="file" onchange="apri(this)">
     <div id="contenuto"></div>
 </body>
 </html>
