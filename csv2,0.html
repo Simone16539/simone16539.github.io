@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Grafico CSV semplificato</title>
+</head>
+<body>
+    <h2>Carica un file CSV</h2>
+    <input type="file" id="fileCSV" accept=".csv">
+    <canvas id="grafico" width="1000" height="500"></canvas>
+    <script>
+        document.getElementById("fileCSV").addEventListener("change", function(evento) {
+            let file = evento.target.files[0];
+            if (file) {
+                let lettore = new FileReader();
+                lettore.onload = function(e) {
+                    let testo = e.target.result;
+                    testo = testo.replaceAll('"', '');
+                    let righe = testo.split('\n');
+                    let intestazioni = righe[0].split(',');
+                    let dati = [];
+                    for (let i = 1; i < righe.length; i++) {
+                        let celle = righe[i].split(',');
+                        let anno = parseInt(celle[0]);
+                        let numero = parseInt(celle[1]);
+                        if (!isNaN(anno) && !isNaN(numero)) {
+                            dati.push([anno, numero]);
+                        }
+                    }
+                    disegnaGrafico(intestazioni, dati);
+                };
+                lettore.readAsText(file);
+            }
+        });
+        function disegnaGrafico(intestazioni, dati) {
+            let canvas = document.getElementById("grafico");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let anni = [];
+            let valori = [];
+            for (let i = 0; i < dati.length; i++) {
+                anni.push(dati[i][0]);
+                valori.push(dati[i][1]);
+            }
+            let massimo = Math.max(...valori);
+            massimo = Math.ceil(massimo / 20000) * 20000;
+            let spazioX = (canvas.width - 100) / (anni.length - 1);
+
+            //asse X
+            ctx.beginPath();
+            ctx.moveTo(70, canvas.height - 30);
+            ctx.lineTo(canvas.width, canvas.height - 30);
+            ctx.stroke();
+
+            //Y
+            ctx.beginPath();
+            ctx.moveTo(70, 0);
+            ctx.lineTo(70, canvas.height - 30);
+            ctx.stroke();
+
+            //anni sul asse X
+            ctx.textAlign = "center";
+            for (let i = 0; i < anni.length; i++) {
+                let x = 70 + i * spazioX;
+                ctx.fillText(anni[i], x, canvas.height - 10);
+            }
+
+            //num immigrati asse Y + linee guida orizzontali
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            for (let i = 0; i <= massimo; i += 20000) {
+                let y = canvas.height - 30 - (i / massimo) * (canvas.height - 50);
+                ctx.fillText(i, 65, y);
+
+                ctx.beginPath();
+                ctx.moveTo(70, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.strokeStyle = "#e0e0e0";
+                ctx.stroke();
+            }
+
+            //linea del grafico
+            ctx.beginPath();
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2;
+
+            for (let i = 0; i < valori.length; i++) {
+                let x = 70 + i * spazioX;
+                let y = canvas.height - 30 - (valori[i] / massimo) * (canvas.height - 50);
+
+                if (i == 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+
+            ctx.stroke();
+
+            ctx.fillStyle = "red";
+            for (let i = 0; i < valori.length; i++) {
+                let x = 70 + i * spazioX;
+                let y = canvas.height - 30 - (valori[i] / massimo) * (canvas.height - 50);
+
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = "black";
+            ctx.font = "bold 16px Arial";
+            ctx.fillText(intestazioni[0], canvas.width / 2, canvas.height - 50);
+
+            ctx.save();
+            ctx.translate(20, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText(intestazioni[1], 0, 0);
+            ctx.restore();
+        }
+    </script>
+</body>
+</html>
+
