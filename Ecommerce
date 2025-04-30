@@ -1,50 +1,179 @@
+<!-- pagina1.html - Caricamento file JSON -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Obiettivo del Progetto - E-commerce JSON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Prodotti</title>
+</head>
+<body>
+  <h1>Carica il file dei prodotti</h1>
+  <input type="file" id="fileInput" accept=".json,.txt">
+  <button onclick="uploadFile()">Carica</button>
+
+  <script>
+    function uploadFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          localStorage.setItem('prodotti', e.target.result);
+          window.location.href = 'pagina2.html';
+        };
+        reader.readAsText(file);
+      } else {
+        alert('Seleziona un file prima di continuare.');
+      }
+    }
+  </script>
+</body>
+</html>
+
+<!-- pagina2.html - Thumbnail responsive -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prodotti</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #0056b3;
-    }
-    ul {
-      margin-top: 10px;
-      line-height: 1.6;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .card { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    img { width: 100%; height: 150px; object-fit: cover; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Obiettivo del Progetto</h1>
-    <p>
-      Il progetto ha come scopo la realizzazione di un <strong>sito web e-commerce</strong> semplice, basato su architettura client-server, che consenta:
-    </p>
-    <ul>
-      <li>il caricamento di un file JSON (testo) contenente i dati utente e i prodotti in vendita;</li>
-      <li>la navigazione dei prodotti in modalità thumbnail responsive;</li>
-      <li>la visualizzazione dettagliata del singolo prodotto;</li>
-      <li>la gestione di un carrello virtuale;</li>
-      <li>la generazione di uno scontrino digitale in formato PDF stampabile.</li>
-    </ul>
-    <p>
-      L'applicazione è pensata per un utilizzo locale o in cloud, senza la necessità di un database persistente: tutti i dati sono letti da un file JSON strutturato e temporaneamente gestiti in memoria 
-      (es. <code>localStorage</code>, <code>sessionStorage</code> o variabili lato server).
-    </p>
-  </div>
+  <h1>Prodotti in vendita</h1>
+  <div class="grid" id="productGrid"></div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem('prodotti'));
+    const grid = document.getElementById('productGrid');
+
+    data.prodotti.forEach((p, index) => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `
+        <img src="${p.immagine}" alt="${p.modello}">
+        <h3>${p.marca} ${p.modello}</h3>
+        <p>Prezzo: €${p.prezzo}</p>
+        <button onclick="dettagli(${index})">Dettagli</button>
+      `;
+      grid.appendChild(div);
+    });
+
+    function dettagli(index) {
+      localStorage.setItem('prodottoSelezionato', index);
+      window.location.href = 'pagina3.html';
+    }
+  </script>
+</body>
+</html>
+
+<!-- pagina3.html - Pagina vetrina -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dettaglio Prodotto</title>
+</head>
+<body>
+  <div id="dettaglio"></div>
+  <button onclick="aggiungiCarrello()">Aggiungi al carrello</button>
+  <script>
+    const prodotti = JSON.parse(localStorage.getItem('prodotti')).prodotti;
+    const index = localStorage.getItem('prodottoSelezionato');
+    const prodotto = prodotti[index];
+
+    const div = document.getElementById('dettaglio');
+    div.innerHTML = `
+      <h2>${prodotto.marca} ${prodotto.modello}</h2>
+      <img src="${prodotto.immagine}" style="width:300px;"><br>
+      <p>${prodotto.descrizione}</p>
+      <p>Prezzo: €${prodotto.prezzo}</p>
+    `;
+
+    function aggiungiCarrello() {
+      let carrello = JSON.parse(localStorage.getItem('carrello')) || [];
+      carrello.push(prodotto);
+      localStorage.setItem('carrello', JSON.stringify(carrello));
+      window.location.href = 'pagina4.html';
+    }
+  </script>
+</body>
+</html>
+
+<!-- pagina4.html - Carrello -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrello</title>
+</head>
+<body>
+  <h1>Carrello</h1>
+  <ul id="listaCarrello"></ul>
+  <button onclick="vaiAScontrino()">Vai allo scontrino</button>
+
+  <script>
+    const carrello = JSON.parse(localStorage.getItem('carrello')) || [];
+    const lista = document.getElementById('listaCarrello');
+    carrello.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = `${p.marca} ${p.modello} - €${p.prezzo}`;
+      lista.appendChild(li);
+    });
+
+    function vaiAScontrino() {
+      window.location.href = 'pagina5.html';
+    }
+  </script>
+</body>
+</html>
+
+<!-- pagina5.html - Scontrino PDF -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scontrino</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <h1>Scontrino</h1>
+  <div id="scontrino"></div>
+  <button onclick="generaPDF()">Scarica PDF</button>
+
+  <script>
+    const carrello = JSON.parse(localStorage.getItem('carrello')) || [];
+    const div = document.getElementById('scontrino');
+    let totale = 0;
+    carrello.forEach(p => {
+      const pElem = document.createElement('p');
+      pElem.textContent = `${p.marca} ${p.modello} - €${p.prezzo}`;
+      div.appendChild(pElem);
+      totale += p.prezzo;
+    });
+    const tot = document.createElement('p');
+    tot.innerHTML = `<strong>Totale: €${totale.toFixed(2)}</strong>`;
+    div.appendChild(tot);
+
+    function generaPDF() {
+      const {{ jsPDF }} = window.jspdf;
+      const doc = new jsPDF();
+      let y = 10;
+      carrello.forEach(p => {
+        doc.text(`${p.marca} ${p.modello} - €${p.prezzo}`, 10, y);
+        y += 10;
+      });
+      doc.text(`Totale: €${totale.toFixed(2)}`, 10, y);
+      doc.save("scontrino.pdf");
+    }
+  </script>
 </body>
 </html>
