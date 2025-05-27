@@ -1,122 +1,171 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Grafico CSV</title>
+  <meta charset="UTF-8">
+  <title>E-commerce con Login</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    section { display: none; }
+    img { max-width: 100px; border: 1px solid #ccc; border-radius: 6px; transition: 0.3s; }
+    img:hover, h3:hover { transform: scale(1.05); cursor: pointer; color: darkblue; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    button { margin: 5px; }
+    input { margin: 5px; }
+  </style>
 </head>
 <body>
-    <h2>Carica un file CSV</h2>
-    <input type="file" id="fileCSV" accept=".csv">
-    <canvas id="grafico" width="1000" height="500"></canvas>
-    <script>
-        document.getElementById("fileCSV").addEventListener("change", function(evento) {
-            let file = evento.target.files[0];
-            if (file) {
-                let lettore = new FileReader();
-                lettore.onload = function(e) {
-                    let testo = e.target.result;
-                    testo = testo.replaceAll('"', '');
-                    let righe = testo.split('\n');
-                    let intestazioni = righe[0].split(',');
-                    let dati = [];
-                    for (let i = 1; i < righe.length; i++) {
-                        let celle = righe[i].split(',');
-                        let anno = parseInt(celle[0]);
-                        let numero = parseInt(celle[1]);
-                        if (!isNaN(anno) && !isNaN(numero)) {
-                            dati.push([anno, numero]);
-                        }
-                    }
-                    disegnaGrafico(intestazioni, dati);
-                };
-                lettore.readAsText(file);
-            }
-        });
-        function disegnaGrafico(intestazioni, dati) {
-            let canvas = document.getElementById("grafico");
-            let ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let anni = [];
-            let valori = [];
-            for (let i = 0; i < dati.length; i++) {
-                anni.push(dati[i][0]);
-                valori.push(dati[i][1]);
-            }
-            let massimo = Math.max(...valori);
-            massimo = Math.ceil(massimo / 20000) * 20000;
-            let spazioX = (canvas.width - 100) / (anni.length - 1);
 
-            //asse X
-            ctx.beginPath();
-            ctx.moveTo(70, canvas.height - 30);
-            ctx.lineTo(canvas.width, canvas.height - 30);
-            ctx.stroke();
+<h1>Mini E-commerce</h1>
 
-            //Y
-            ctx.beginPath();
-            ctx.moveTo(70, 0);
-            ctx.lineTo(70, canvas.height - 30);
-            ctx.stroke();
+<nav>
+  <button onclick="showSection('login')">🔐 Login</button>
+  <button onclick="showSection('upload')">📂 Carica File</button>
+  <button onclick="showSection('prodotti')">📦 Prodotti</button>
+  <button onclick="showSection('dettaglio')">🔍 Dettaglio</button>
+  <button onclick="showSection('carrello')">🛒 Carrello</button>
+</nav>
 
-            //anni sul asse X
-            ctx.textAlign = "center";
-            for (let i = 0; i < anni.length; i++) {
-                let x = 70 + i * spazioX;
-                ctx.fillText(anni[i], x, canvas.height - 10);
-            }
+<!-- FASE 0: LOGIN -->
+<section id="login">
+  <h2>Fase 0: Login</h2>
+  <input type="file" id="jsonFile" />
+  <br>
+  <input type="text" id="user" placeholder="Username" />
+  <input type="password" id="psw" placeholder="Password" />
+  <button onclick="login()">Login</button>
+</section>
 
-            //num immigrati asse Y + linee guida orizzontali
-            ctx.textAlign = "right";
-            ctx.textBaseline = "middle";
-            for (let i = 0; i <= massimo; i += 20000) {
-                let y = canvas.height - 30 - (i / massimo) * (canvas.height - 50);
-                ctx.fillText(i, 65, y);
+<!-- FASE 1: Upload -->
+<section id="upload">
+  <h2>Fase 1: File caricato correttamente</h2>
+  <p>Benvenuto, <span id="nomeUtente"></span>!</p>
+</section>
 
-                ctx.beginPath();
-                ctx.moveTo(70, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.strokeStyle = "#e0e0e0";
-                ctx.stroke();
-            }
+<!-- FASE 2: Lista prodotti -->
+<section id="prodotti">
+  <h2>Fase 2: Prodotti</h2>
+  <div id="catalogo"></div>
+</section>
 
-            //linea del grafico
-            ctx.beginPath();
-            ctx.strokeStyle = "blue";
-            ctx.lineWidth = 2;
+<!-- FASE 3: Dettaglio -->
+<section id="dettaglio">
+  <h2>Fase 3: Dettaglio Prodotto</h2>
+  <div id="dettaglioProdotto"></div>
+  <button onclick="aggiungiAlCarrello()">Aggiungi al Carrello</button>
+</section>
 
-            for (let i = 0; i < valori.length; i++) {
-                let x = 70 + i * spazioX;
-                let y = canvas.height - 30 - (valori[i] / massimo) * (canvas.height - 50);
+<!-- FASE 4: Carrello -->
+<section id="carrello">
+  <h2>Fase 4: Carrello</h2>
+  <div id="contenutoCarrello"></div>
+  <button onclick="generaPDF()">Scarica Scontrino PDF</button>
+</section>
 
-                if (i == 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
+<script>
+  let dati = {};
+  let prodotti = [];
+  let carrello = [];
+  let prodottoCorrente = null;
 
-            ctx.stroke();
+  function showSection(id) {
+    document.querySelectorAll("section").forEach(s => s.style.display = "none");
+    document.getElementById(id).style.display = "block";
 
-            ctx.fillStyle = "red";
-            for (let i = 0; i < valori.length; i++) {
-                let x = 70 + i * spazioX;
-                let y = canvas.height - 30 - (valori[i] / massimo) * (canvas.height - 50);
+    if (id === "prodotti") mostraProdotti();
+    if (id === "dettaglio") mostraDettaglio();
+    if (id === "carrello") mostraCarrello();
+  }
 
-                ctx.beginPath();
-                ctx.arc(x, y, 4, 0, Math.PI * 2);
-                ctx.fill();
-            }
+  function login() {
+    const file = document.getElementById("jsonFile").files[0];
+    const user = document.getElementById("user").value;
+    const psw = document.getElementById("psw").value;
 
-            ctx.fillStyle = "black";
-            ctx.font = "bold 16px Arial";
-            ctx.fillText(intestazioni[0], canvas.width / 2, canvas.height - 50);
+    if (!file) return alert("Carica il file JSON prima di fare login.");
 
-            ctx.save();
-            ctx.translate(20, canvas.height / 2);
-            ctx.rotate(-Math.PI / 2);
-            ctx.fillText(intestazioni[1], 0, 0);
-            ctx.restore();
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        dati = JSON.parse(e.target.result);
+        if (dati.anagrafica.user === user && dati.anagrafica.psw === psw) {
+          prodotti = dati.prodotti;
+          document.getElementById("nomeUtente").textContent = dati.anagrafica.nome + " " + dati.anagrafica.cognome;
+          showSection("upload");
+        } else {
+          alert("Username o password errati.");
         }
-    </script>
+      } catch (err) {
+        alert("Errore nel file JSON");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function mostraProdotti() {
+    const container = document.getElementById("catalogo");
+    container.innerHTML = "";
+    prodotti.forEach((p, i) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.tipo}" onclick="scegliProdotto(${i})">
+        <h3 onclick="scegliProdotto(${i})">${p.marca} ${p.tipo}</h3>
+        <p>${p.descrizione}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function scegliProdotto(index) {
+    prodottoCorrente = prodotti[index];
+    showSection("dettaglio");
+  }
+
+  function mostraDettaglio() {
+    if (!prodottoCorrente) return;
+    const dett = document.getElementById("dettaglioProdotto");
+    dett.innerHTML = `
+      <img src="${prodottoCorrente.img}" />
+      <h3>${prodottoCorrente.marca} ${prodottoCorrente.tipo}</h3>
+      <p>${prodottoCorrente.descrizione}</p>
+    `;
+  }
+
+  function aggiungiAlCarrello() {
+    if (prodottoCorrente) {
+      carrello.push(prodottoCorrente);
+      alert("Prodotto aggiunto al carrello!");
+    }
+  }
+
+  function mostraCarrello() {
+    const contenuto = document.getElementById("contenutoCarrello");
+    contenuto.innerHTML = "";
+    carrello.forEach((p, i) => {
+      contenuto.innerHTML += `
+        <div class="card">
+          <strong>${i + 1}. ${p.marca} ${p.tipo}</strong>
+          <p>${p.descrizione}</p>
+          <img src="${p.img}" />
+        </div>
+      `;
+    });
+  }
+
+  function generaPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text("Scontrino Acquisti:", 10, 10);
+    carrello.forEach((p, i) => {
+      doc.text(`${i + 1}. ${p.marca} ${p.tipo} - ${p.descrizione}`, 10, 20 + i * 10);
+    });
+    doc.save("scontrino.pdf");
+  }
+
+  // Mostra login all'avvio
+  showSection("login");
+</script>
+
 </body>
 </html>
