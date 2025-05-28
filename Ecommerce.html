@@ -26,7 +26,7 @@
   <button onclick="showSection('carrello')">🛒 Carrello</button>
 </nav>
 
-<!-- FASE 0: LOGIN -->
+
 <section id="login">
   <h2>Fase 0: Login</h2>
   <input type="file" id="jsonFile" />
@@ -34,28 +34,24 @@
   <input type="text" id="user" placeholder="Username" />
   <input type="password" id="psw" placeholder="Password" />
   <button onclick="login()">Login</button>
-</section>
 
-<!-- FASE 1: Upload -->
 <section id="upload">
   <h2>Fase 1: File caricato correttamente</h2>
   <p>Benvenuto, <span id="nomeUtente"></span>!</p>
 </section>
 
-<!-- FASE 2: Lista prodotti -->
+
 <section id="prodotti">
   <h2>Fase 2: Prodotti</h2>
   <div id="catalogo"></div>
 </section>
 
-<!-- FASE 3: Dettaglio -->
+
 <section id="dettaglio">
   <h2>Fase 3: Dettaglio Prodotto</h2>
   <div id="dettaglioProdotto"></div>
   <button onclick="aggiungiAlCarrello()">Aggiungi al Carrello</button>
-</section>
 
-<!-- FASE 4: Carrello -->
 <section id="carrello">
   <h2>Fase 4: Carrello</h2>
   <div id="contenutoCarrello"></div>
@@ -163,7 +159,7 @@
     doc.save("scontrino.pdf");
   }
 
-  // Mostra login all'avvio
+  
   showSection("login");
 </script>
 
