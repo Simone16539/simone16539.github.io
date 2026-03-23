@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List Perfetta</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List Perfetta</h1>
+
+        <div class="add-task">
+            <input type="text" id="todoTitle" placeholder="Titolo task">
+            <textarea id="todoDescription" placeholder="Descrizione (opzionale)"></textarea>
+            <button id="addBtn">Aggiungi</button>
+        </div>
+
+        <!-- Filtri -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tutte</button>
+            <button class="filter-btn" data-filter="active">Attive</button>
+            <button class="filter-btn" data-filter="completed">Completate</button>
+        </div>
+
+        <div id="todoList"></div>
+
+        <p id="activeCount"></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
